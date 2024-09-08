@@ -1,0 +1,326 @@
+"0","#install.packages(""pacman"")"
+"0","pacman::p_load(""here"", ""tidyverse"", ""scales"", ""maEndToEnd"", ""pd.mogene.2.0.st"", ""oligo"")"
+"2","Installing package into ‘C:/Users/Sasha/AppData/Local/R/win-library/4.4’
+(as ‘lib’ is unspecified)
+"
+"2","Warning:"
+"2"," package ‘maEndToEnd’ is not available for this version of R
+
+A version of this package for your version of R might be available elsewhere,
+see the ideas at
+https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages
+"
+"2","Warning:"
+"2"," unable to access index for repository http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/4.4:
+  cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/4.4/PACKAGES'
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/base64_2.0.1.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 60563 bytes (59 KB)
+"
+"2","downloaded 59 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/checkmate_2.3.2.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 748552 bytes (731 KB)
+"
+"2","downloaded 731 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/deldir_2.0-4.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 289125 bytes (282 KB)
+"
+"2","downloaded 282 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/gcrma_2.76.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 263902 bytes (257 KB)
+"
+"2","downloaded 257 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/hexbin_1.28.4.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1609338 bytes (1.5 MB)
+"
+"2","downloaded 1.5 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/BeadDataPackR_1.56.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 299946 bytes (292 KB)
+"
+"2","downloaded 292 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/illuminaio_0.46.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 332966 bytes (325 KB)
+"
+"2","downloaded 325 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/htmlTable_2.4.3.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 430169 bytes (420 KB)
+"
+"2","downloaded 420 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/Formula_1.2-5.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 161370 bytes (157 KB)
+"
+"2","downloaded 157 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/interp_1.1-6.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1929165 bytes (1.8 MB)
+"
+"2","downloaded 1.8 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/xtable_1.8-4.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 711520 bytes (694 KB)
+"
+"2","downloaded 694 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/affyio_1.74.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 96313 bytes (94 KB)
+"
+"2","downloaded 94 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/ff_4.0.12.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1071736 bytes (1.0 MB)
+"
+"2","downloaded 1.0 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/affxparser_1.76.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1336973 bytes (1.3 MB)
+"
+"2","downloaded 1.3 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/preprocessCore_1.66.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 172993 bytes (168 KB)
+"
+"2","downloaded 168 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/affy_1.82.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1561882 bytes (1.5 MB)
+"
+"2","downloaded 1.5 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/affyPLM_1.80.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 2878567 bytes (2.7 MB)
+"
+"2","downloaded 2.7 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/beadarray_2.54.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 4532326 bytes (4.3 MB)
+"
+"2","downloaded 4.3 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/gridSVG_1.7-5.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1434996 bytes (1.4 MB)
+"
+"2","downloaded 1.4 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/Hmisc_5.1-3.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 3606271 bytes (3.4 MB)
+"
+"2","downloaded 3.4 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/hwriter_1.3.2.1.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 111715 bytes (109 KB)
+"
+"2","downloaded 109 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/latticeExtra_0.6-30.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 2184740 bytes (2.1 MB)
+"
+"2","downloaded 2.1 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/setRNG_2024.2-1.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 58197 bytes (56 KB)
+"
+"2","downloaded 56 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/vsn_3.72.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1639479 bytes (1.6 MB)
+"
+"2","downloaded 1.6 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/svglite_2.1.3.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 685210 bytes (669 KB)
+"
+"2","downloaded 669 KB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/SparseM_1.84-2.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 887972 bytes (867 KB)
+"
+"2","downloaded 867 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/graphite_1.50.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 922144 bytes (900 KB)
+"
+"2","downloaded 900 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/annotate_1.82.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 2087157 bytes (2.0 MB)
+"
+"2","downloaded 2.0 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/zip_2.3.1.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 434343 bytes (424 KB)
+"
+"2","downloaded 424 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/oligoClasses_1.66.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1436195 bytes (1.4 MB)
+"
+"2","downloaded 1.4 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/ArrayExpress_1.64.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 191358 bytes (186 KB)
+"
+"2","downloaded 186 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/oligo_1.68.2.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 29190884 bytes (27.8 MB)
+"
+"2","downloaded 27.8 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/arrayQualityMetrics_3.60.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 578033 bytes (564 KB)
+"
+"2","downloaded 564 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/topGO_2.56.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 2018624 bytes (1.9 MB)
+"
+"2","downloaded 1.9 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/ReactomePA_1.48.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 97766 bytes (95 KB)
+"
+"2","downloaded 95 KB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/geneplotter_1.82.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1653984 bytes (1.6 MB)
+"
+"2","downloaded 1.6 MB
+
+"
+"2","trying URL 'https://bioconductor.org/packages/3.19/bioc/bin/windows/contrib/4.4/genefilter_1.86.0.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 1304189 bytes (1.2 MB)
+"
+"2","downloaded 1.2 MB
+
+"
+"2","trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.4/openxlsx_4.2.7.zip'
+"
+"2","Content type 'application/zip'"
+"2"," length 2494665 bytes (2.4 MB)
+"
+"2","downloaded 2.4 MB
+
+"
+"1","package ‘base64’ successfully unpacked and MD5 sums checked
+"
+"2","Error in unpackPkgZip(foundpkgs[okp, 2L], foundpkgs[okp, 1L], lib, libs_only,  : 
+  ERROR: failed to lock directory ‘C:\Users\Sasha\AppData\Local\R\win-library\4.4’ for modifying
+Try removing ‘C:\Users\Sasha\AppData\Local\R\win-library\4.4/00LOCK’
+"
