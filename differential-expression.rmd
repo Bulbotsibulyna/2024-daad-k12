@@ -29,41 +29,96 @@ plot(pressure)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
+#importing packages 
 ```{r}
 install.packages("pacman")
 install.packages("tidyverse")
 install.packages("DESeq2")
 install.packages("ashr")
+install.packages("BiocManager")
 pacman::p_load("here", "tidyverse", "DESeq2", "ashr")
+BiocManager::install("tximport")
 ```
+
 ```{r}
-i_am("Differential-expression-Oleksandra.rmd")
-counts_raw <- read_tsv("GSE262291_Gene_level_counts.txt")
-metadata_raw <- read_tsv("GSE262291_trx_EGids_combined.txt")
+i_am("differential-expression.rmd")
 ```
 
 
+
+#creating vector of paths to files
 ```{r}
-ggplot(counts_raw, aes(x=Veh_21WB)) +
-  geom_density(color="darkblue", fill="lightblue")
+files <- files <- list.files(here("Data"), full.names = TRUE)
+names(files) <- paste0("sample", 1:10)
+files
 ```
+#Importing Data
 ```{r}
-counts <- read_tsv("GSE262291_Gene_level_counts.txt") %>%
-  na.omit() %>%
-  column_to_rownames(var = "symbol")
-counts <- counts %>% dplyr::select(-ENTREZID, -kept, -product)
-counts
+library("tximport")
+metadata <- read_tsv("GSE262291_trx_EGids_combined.txt")
+tx2gene <- metadata %>% select(transcript_id, gene_id)
+txi.kallisto.tsv <- tximport(files, type = "kallisto", 
+                             countsFromAbundance="lengthScaledTPM",
+                             txOut = TRUE,
+                             ignoreAfterBar = TRUE,
+                             ignoreTxVersion = TRUE)
+txi.kallisto.tsv$counts
 ```
-```{r}
-sample_data <- data.frame(col1 = c("Control", "Control", "Control", "Control", "Infected", "Infected", "Infected", "Infected", "Infected", "Infected"), row.names = c("Veh_21WB", "Veh_35WB", "Veh_36WB", "Veh_7WB", "Flu_18WB", "Flu_2WB", "Flu_38WB", "Flu_43WB", "Flu_52WB", "Flu_60WB"))
-sample_data
-```
+
 
 #DESeq2
 ```{r}
-dds <- DESeqDataSetFromMatrix(countData = counts, colData = sample_data, design= -col1)
+coldata <- data.frame(
+  row.names = c("sample1", "sample2", "sample3", "sample4", "sample5", "sample6", "sample7", "sample8", "sample9", "sample10"),
+  condition = c("infected", "infected", "infected", "control", "control", "infected", "infected", "infected", "control", "control")
+)
+
+design <- ~ condition
+  
+dds <- DESeqDataSetFromTximport(txi.kallisto.tsv, colData = coldata, design = ~ condition)
 ```
 ```{r}
-data <- read.delim(gzfile("SRR28424659.lite.1"))
-data
+dds <- DESeq(dds)
+dds
+```
+
+#Results
+```{r}
+res <- results(dds)
+```
+
+```{r}
+res_sig <- res %>% as.data.frame() %>% filter(padj < 0.01, abs(log2FoldChange) > 1) %>%
+  arrange(desc(log2FoldChange))
+res_sig
+```
+
+```{r}
+write.csv(res, file = here("DESeq2-results-raw.csv"))
+write.csv(res_sig, file = here("DESeq2_results-sorted.csv"))
+```
+
+#ashr
+```{r}
+pacman::p_load("ashr")
+res_ashr <- lfcShrink(dds, coef = 2, type="ashr")
+```
+```{r}
+res_de_s <- res %>% as.data.frame() %>% filter(abs(log2FoldChange) > 1, padj < 0.05) %>% arrange(desc(log2FoldChange))
+
+head(res_de_s)
+``` 
+
+```{r}
+install.packages("EnhancedVolcano")
+library("EnhancedVolcano")
+EnhancedVolcano(res_sig,
+                lab = rownames(res_sig),
+                x = "log2FoldChange",
+                y = "padj")
+
+EnhancedVolcano(res_de_s,
+                lab = rownames(res_de_s),
+                x = "log2FoldChange",
+                y = "padj")
 ```
