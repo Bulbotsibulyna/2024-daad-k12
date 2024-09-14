@@ -16,7 +16,7 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r cars}
-summary(cars)
+dev.off()  
 ```
 
 ## Including Plots
@@ -88,7 +88,7 @@ res <- results(dds)
 ```
 
 ```{r}
-res_sig <- res %>% as.data.frame() %>% filter(padj < 0.01, abs(log2FoldChange) > 1) %>%
+res_sig <- res %>% as.data.frame() %>% filter(padj < 0.05, abs(log2FoldChange) > 1) %>%
   arrange(desc(log2FoldChange))
 res_sig
 ```
@@ -106,19 +106,36 @@ res_ashr <- lfcShrink(dds, coef = 2, type="ashr")
 ```{r}
 res_de_s <- res %>% as.data.frame() %>% filter(abs(log2FoldChange) > 1, padj < 0.05) %>% arrange(desc(log2FoldChange))
 
-head(res_de_s)
+res_de_s
 ``` 
 
 ```{r}
-install.packages("EnhancedVolcano")
+library("ggplot2")
+
+ggplot(res_sig, aes(x = log2FoldChange, y = padj)) +
+  geom_point(alpha = 0.5) +  
+  theme_minimal() + 
+  labs(title = "Volcano Plot", x = "log2 Fold Change", y = "Adjusted p-value") 
+```
+```{r}
+library("remotes")
+remotes::install_github("kevinblighe/EnhancedVolcano")
 library("EnhancedVolcano")
-EnhancedVolcano(res_sig,
+
+```
+```{r}
+p <- EnhancedVolcano(res_sig,
                 lab = rownames(res_sig),
                 x = "log2FoldChange",
-                y = "padj")
-
+                y = "padj",
+                labSize = 3.0)
+ggsave("voclano-plot.png", plot = p, width = 12, height = 7)
+p
+```
+```{r}
 EnhancedVolcano(res_de_s,
                 lab = rownames(res_de_s),
                 x = "log2FoldChange",
-                y = "padj")
+                y = "padj",
+                labSize = 3.0)
 ```
