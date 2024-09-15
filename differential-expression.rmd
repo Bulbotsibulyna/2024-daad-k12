@@ -31,11 +31,11 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 #importing packages 
 ```{r}
-install.packages("pacman")
-install.packages("tidyverse")
-install.packages("DESeq2")
-install.packages("ashr")
-install.packages("BiocManager")
+#install.packages("pacman")
+#install.packages("tidyverse")
+#install.packages("DESeq2")
+#install.packages("ashr")
+#install.packages("BiocManager")
 pacman::p_load("here", "tidyverse", "DESeq2", "ashr")
 BiocManager::install("tximport")
 ```
@@ -81,6 +81,83 @@ dds <- DESeqDataSetFromTximport(txi.kallisto.tsv, colData = coldata, design = ~ 
 dds <- DESeq(dds)
 dds
 ```
+```{r}
+dim(data.frame(coldata$condition))
+```
+
+```{R}
+library(ggfortify)
+vsd <- DESeq2::vst(dds, blind=FALSE) 
+#as_tibble(assay(vsd))
+pcaData <- (as.data.frame(assay(vsd)))
+df_long <- pcaData %>%
+  mutate(Gene = rownames(pcaData)) %>%   
+  pivot_longer(cols = -Gene,  
+               names_to = "Sample",
+               values_to = "Expression")
+
+df_transposed <- df_long %>%
+  pivot_wider(names_from = Gene,  
+              values_from = Expression)
+head(df_transposed)
+row.names(df_transposed) <- df_transposed$Sample
+df_transposed$Sample<- NULL 
+head(df_transposed)
+
+#pcaData
+#pcaData_filtered <- t(pcaData[apply(pcaData, 2, function(x) var(x, na.rm = TRUE) > 0), ])
+#head(pcaData_filtered)
+pca <- prcomp(df_transposed, scale = FALSE)
+
+
+PC1 <- pca$x[,1]
+PC2 <- pca$x[,2]
+
+summary(pca) # Proportion of Variance
+
+ggplot(data = df_transposed, aes(x = PC1, y = PC2)) +
+  geom_point(aes(col=coldata))+ 
+  xlab("PC1") + 
+  ylab("PC2") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2")
+
+```
+
+```{r}
+library("remotes")
+remotes::install_github("sinhrks/ggfortify")
+
+```
+
+```{R}
+library(ggfortify)
+vsd <- DESeq2::vst(dds, blind=FALSE) 
+#as_tibble(assay(vsd))
+pcaData <- (as.data.frame(assay(vsd)))
+df_long <- pcaData %>%
+  mutate(Gene = rownames(pcaData)) %>%   
+  pivot_longer(cols = -Gene,  
+               names_to = "Sample",
+               values_to = "Expression")
+
+df_transposed <- df_long %>%
+  pivot_wider(names_from = Gene,  
+              values_from = Expression)
+
+rownames(df_transposed) <- df_transposed$Sample
+df_transposed$Sample <- NULL 
+head(df_transposed)
+
+#pcaData
+#pcaData_filtered <- t(pcaData[apply(pcaData, 2, function(x) var(x, na.rm = TRUE) > 0), ])
+#head(pcaData_filtered)
+pca <- prcomp(df_transposed, scale = FALSE)
+
+
+autoplot(data.frame(pca), data = data.frame(df_transposed), colour = data.frame(coldata$condition))
+
+```
 
 #Results
 ```{r}
@@ -94,8 +171,8 @@ res_sig
 ```
 
 ```{r}
-write.csv(res, file = here("DESeq2-results-raw.csv"))
-write.csv(res_sig, file = here("DESeq2_results-sorted.csv"))
+#write.csv(res, file = here("DESeq2-results-raw.csv"))
+write.csv(res_sig, file = here("DESeq2-results-sorted.csv"))
 ```
 
 #ashr
@@ -133,9 +210,13 @@ ggsave("voclano-plot.png", plot = p, width = 12, height = 7)
 p
 ```
 ```{r}
-EnhancedVolcano(res_de_s,
-                lab = rownames(res_de_s),
+library("EnhancedVolcano")
+library("ggplot2")
+p <- EnhancedVolcano(res,
+                lab = rownames(res),
                 x = "log2FoldChange",
                 y = "padj",
                 labSize = 3.0)
+ggsave("voclano-plot-raw.png", plot = p, width = 12, height = 7)
+p
 ```

@@ -28,6 +28,9 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+
+```
 
 ```{r}
 BiocManager::install("biomaRt", type = "source")
@@ -37,17 +40,64 @@ library(data.table)
 
 ```{r}
 library("here")
-i_am("")
+i_am("functional-analysis.rmd")
+```
 
 ```{r}
 listMarts()
 ensembl <- useMart("ensembl")
-ensembl = useEnsembl(biomart="ensembl")
-listDatasets(ensembl)
-ensembl <- useDataset("mmusculus_gene_ensembl", mart = ensembl)
+ensembl <- useEnsembl(biomart="ensembl", dataset = "mmusculus_gene_ensembl")
 ```
 
 ```{r}
-de_table <- read.csv()
+library("ggplot2")
+
+de_table <- read.csv(here("DESeq2-results-raw.csv"))
+h <- hist(de_table$log2FoldChange)
+dim(de_table)
 ```
 
+```{r}
+de_tab <- read.csv(here("DESeq2-results-sorted.csv"))
+genes <- unique(de_tab$X) 
+genes <- sub("\\..*", "", de_tab$X)
+
+de_tab$X <- genes
+genes_l <- list(genes)
+genes
+```
+```{r}
+filters <- listFilters(ensembl)
+attributes <- listAttributes(ensembl)
+
+print(filters)
+print(attributes)
+
+```
+
+```{r}
+ensembl <- useMart("ensembl", dataset = "mmusculus_gene_ensembl", host = "https://www.ensembl.org")
+genes_ids <- getBM(filters = "ensembl_transcript_id",
+               attributes = c("external_gene_name","ensembl_gene_id"),
+               values = genes,
+               mart = ensembl)
+genes_ids
+```
+```{r}
+install.packages("AnnotationDbi")
+BiocManager::install("org.Mm.eg.db")
+
+library(AnnotationDbi)
+library(org.Mm.eg.db)
+
+gene_symbols <- mapIds(org.Mm.eg.db,
+                       keys = genes,
+                       column = "SYMBOL",
+                       keytype = "ENSEMBL",
+                       multiVals = "first")
+
+results <- data.frame(Ensembl_ID = names(gene_symbols),
+                       Gene_Symbol = gene_symbols,
+                       stringsAsFactors = FALSE)
+results
+```
